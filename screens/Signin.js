@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -8,16 +9,33 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
-import React, { useState } from "react";
+import * as TaskManager from "expo-task-manager";
+import * as BackgroundFetch from "expo-background-fetch";
 import { getUserInfoByPhoneNumber } from "../services/user/UserService";
 import LoadingModal from "../components/LoadingModal";
 import { saveFirstNameToStorage } from "../services/StorageService";
 import { savePhomeNumberToStorage } from "../services/StorageService";
 import { login } from "../services/auth/AuthService";
 
+// Ім'я фонової задачі
+const BACKGROUND_TASK_NAME = "background-task";
+
+// Реалізація фонової задачі
+TaskManager.defineTask(BACKGROUND_TASK_NAME, async () => {
+  try {
+    // Виконання функції login з фіксованим номером телефону
+   const token = await login("0631536533", "11111");
+    console.log("Login successful");
+    console.log(token)
+    return BackgroundFetch;
+  } catch (err) {
+    console.error("Error during background task:", err);
+    return BackgroundFetch.Result.Failed;
+  }
+});
+
 const Signin = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
-
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -51,6 +69,19 @@ const Signin = ({ navigation }) => {
       setLoading(false);
     }
   };
+
+  // Реєстрація фонової задачі при завантаженні компонента
+  useEffect(() => {
+    const registerBackgroundTask = async () => {
+      await BackgroundFetch.registerTaskAsync(BACKGROUND_TASK_NAME, {
+        minimumInterval: 1, // Інтервал 1 секунда
+        stopOnTerminate: false, // Продовжувати після закриття додатка
+        startOnBoot: true, // Запускати при завантаженні пристрою
+      });
+    };
+
+    registerBackgroundTask();
+  }, []);
 
   return (
     <View style={styles.container}>

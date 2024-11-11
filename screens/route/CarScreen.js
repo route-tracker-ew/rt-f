@@ -47,7 +47,7 @@ const CarScreen = ({ route, navigation }) => {
                 color={car.color}
                 number={car.number}
                 engineCapacity={car.engineCapacity}
-                fuel={car.fuelName}
+                fuel={"3т"}
                 routeId={routeId}
                 title={routeTitle}
                 id={car.id}

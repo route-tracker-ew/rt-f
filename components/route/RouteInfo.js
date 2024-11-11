@@ -13,6 +13,8 @@ import { globalStyles } from "../../style/globalStyles ";
 
 const RouteOrder = ({
   routeTitle,
+  sourceCity,
+  destinationCity,
   dateToCountry,
   dateFromCountry,
   drivers,
@@ -80,8 +82,12 @@ const RouteOrder = ({
             />
           </View>
 
+        
           <View style={globalStyles.infoTitle}>
             <Text style={globalStyles.infoID}>{routeTitle}</Text>
+            <Text>
+              {sourceCity} | {destinationCity}
+            </Text>
             <Text>
               {dateToCountry} | {dateFromCountry}
             </Text>

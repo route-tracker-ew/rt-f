@@ -23,7 +23,9 @@ const getParcelStatusOrder = (status) => {
 };
 
 const ParcelList = ({ route, navigation }) => {
-  const { parcels } = route.params;
+  const parcels  = route.params.parcels || [];
+
+  console.log(parcels[0].id)
 
   if (parcels.length === 0) {
     return (
@@ -37,13 +39,14 @@ const ParcelList = ({ route, navigation }) => {
     <View style={styles.container}>
       {parcels.map((parcel) => (
         <Order
-          key={parcel.id}
+          id={parcel.id}
           phoneNumber={parcel.receiver.phoneNumber}
           amount={parcel.amount}
           price={parcel.price}
           from={parcel.sourceCity}
           to={parcel.destinationCity}
           currentStep={getParcelStatusOrder(parcel.parcelStatus)}
+          navigation={navigation}
         />
       ))}
     </View>

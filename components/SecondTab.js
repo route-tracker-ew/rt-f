@@ -36,7 +36,7 @@ const SecondTab = ({ navigation }) => {
 
       {/* ---------------------2 */}
       <TouchableOpacity style={styles.icon} onPress={handleParcelList}>
-        <Image source={require("../assets/icons/3.png")} style={styles.ipic} />
+        <Image source={require("../assets/icons/17.png")} style={styles.ipic} />
         <Text style={styles.itxt}>посилки</Text>
       </TouchableOpacity>
 

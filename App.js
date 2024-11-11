@@ -27,12 +27,18 @@ import AddNewWorkerScreen from "./screens/route/AddNewWorkerScreen";
 import AddReceiverScreen from "./screens/parcel/AddReciverScreen";
 import AddSenderAddressScreen from "./screens/parcel/AddSenderAddressScreen";
 import AddReciverAddressScreen from "./screens/parcel/AddReciverAddressScreen";
+import SelectRouteForParcels from "./screens/parcel/SelectRouteForParcels";
 import AddSenderScreen from "./screens/parcel/AddSenderScreen";
 import SelectRouteForParcel from "./screens/parcel/SelectRouteForParcel";
 import ParcelScreen from "./screens/parcel/ParcelScreen";
-import SelectRouteForParcels from "./screens/parcel/SelectRouteForParcels";
 import ParcelList from "./screens/parcel/ParcelList";
 import GpsScreen from "./screens/route/GpsScreen";
+import EditPickupScreen from "./screens/parcel/EditPickupScreen";
+import EditParcelScreen from "./screens/parcel/EditParcelScreen";
+import EditReceiverAddressScreen from "./screens/parcel/EditReciverAddressScreen";
+import EditReceiverScreen from "./screens/parcel/EditReceiverScreen";
+import EditSenderAddressScreen from "./screens/parcel/EditSenderAddressScreen";
+import EditSenderScreen from "./screens/parcel/EditSenderScreen";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -206,7 +212,7 @@ function App() {
           component={AddNewCarScreen}
           options={({}) => ({
             headerTintColor: "black",
-            headerTitle: "Створити новий маршрут",
+            headerTitle: "Створити новий автомобіль",
             headerBackTitle: "Назад",
           })}
         />
@@ -361,6 +367,118 @@ function App() {
             headerTintColor: "black",
             headerTitle: "Оберіть маршрут",
             headerBackTitle: "Назад",
+          })}
+        />
+
+
+        <Stack.Screen
+          name="EditPickupScreen"
+          component={EditPickupScreen}
+          options={({ navigation }) => ({
+            headerTintColor: "black",
+            headerTitle: "Посилка",
+            headerBackTitle: "Назад",
+            navigation: navigation,
+          })}
+
+        /> 
+        <Stack.Screen
+          name="EditParcelScreen"
+          component={EditParcelScreen}
+          options={({ navigation }) => ({
+            headerTintColor: "black",
+            headerTitle: "Посилка",
+            headerBackTitle: "Назад",
+            navigation: navigation,
+          })}
+        />
+
+        <Stack.Screen
+          name="EditSenderScreen"
+          component={EditSenderScreen}
+          options={({}) => ({
+            headerShown: false,
+            cardStyleInterpolator: ({ current, layouts }) => {
+              return {
+                cardStyle: {
+                  transform: [
+                    {
+                      translateY: current.progress.interpolate({
+                        inputRange: [0, 1],
+                        outputRange: [layouts.screen.height, 0],
+                      }),
+                    },
+                  ],
+                },
+              };
+            },
+          })}
+        />
+
+        <Stack.Screen
+          name="EditSenderAddressScreen"
+          component={EditSenderAddressScreen}
+          options={({}) => ({
+            headerShown: false,
+            cardStyleInterpolator: ({ current, layouts }) => {
+              return {
+                cardStyle: {
+                  transform: [
+                    {
+                      translateY: current.progress.interpolate({
+                        inputRange: [0, 1],
+                        outputRange: [layouts.screen.height, 0],
+                      }),
+                    },
+                  ],
+                },
+              };
+            },
+          })}
+        />
+
+        <Stack.Screen
+          name="EditReceiverAddressScreen"
+          component={EditReceiverAddressScreen}
+          options={({}) => ({
+            headerShown: false,
+            cardStyleInterpolator: ({ current, layouts }) => {
+              return {
+                cardStyle: {
+                  transform: [
+                    {
+                      translateY: current.progress.interpolate({
+                        inputRange: [0, 1],
+                        outputRange: [layouts.screen.height, 0],
+                      }),
+                    },
+                  ],
+                },
+              };
+            },
+          })}
+        />
+
+
+          <Stack.Screen
+          name="EditReceiverScreen"
+          component={EditReceiverScreen}
+          options={({}) => ({
+            headerShown: false,
+            cardStyleInterpolator: ({ current, layouts }) => {
+              return {
+                cardStyle: {
+                  transform: [
+                    {
+                      translateY: current.progress.interpolate({
+                        inputRange: [0, 1],
+                        outputRange: [layouts.screen.height, 0],
+                      }),
+                    },
+                  ],
+                },
+              };
+            },
           })}
         />
 

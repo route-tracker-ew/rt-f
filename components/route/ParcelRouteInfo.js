@@ -4,8 +4,10 @@ import { globalStyles } from "../../style/globalStyles ";
 
 const ParcelRouteInfo = ({
   routeTitle,
+  routeTitle3,
   dateToCountry,
   dateFromCountry,
+  id,
   onPress,
 }) => {
   return (
@@ -21,6 +23,7 @@ const ParcelRouteInfo = ({
 
           <View style={globalStyles.infoTitle}>
             <Text style={globalStyles.infoID}>{routeTitle}</Text>
+            <Text>{routeTitle3}</Text>
             <Text>
               {dateToCountry} | {dateFromCountry}
             </Text>
@@ -38,7 +41,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "flex-start",
     alignItems: "center",
-    height: 50,
+    height: 70,
     width: 350,
     borderRadius: 10,
     backgroundColor: "white",

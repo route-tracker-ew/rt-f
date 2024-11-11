@@ -10,27 +10,32 @@ import {
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import * as TaskManager from "expo-task-manager";
-import * as BackgroundFetch from "expo-background-fetch";
 import { getUserInfoByPhoneNumber } from "../services/user/UserService";
 import LoadingModal from "../components/LoadingModal";
 import { saveFirstNameToStorage } from "../services/StorageService";
 import { savePhomeNumberToStorage } from "../services/StorageService";
 import { login } from "../services/auth/AuthService";
+import * as Location from 'expo-location';
+
 
 // Ім'я фонової задачі
-const BACKGROUND_TASK_NAME = "background-task";
+const LOCATION_TASK_NAME = 'background-location-task';
 
 // Реалізація фонової задачі
-TaskManager.defineTask(BACKGROUND_TASK_NAME, async () => {
-  try {
-    // Виконання функції login з фіксованим номером телефону
-   const token = await login("0631536533", "11111");
-    console.log("Login successful");
-    console.log(token)
-    return BackgroundFetch;
-  } catch (err) {
-    console.error("Error during background task:", err);
-    return BackgroundFetch.Result.Failed;
+TaskManager.defineTask(LOCATION_TASK_NAME, ({ data, error }) => {
+  if (error) {
+    console.error("Error in background task:", error);
+    return;
+  }
+
+  if (data) {
+    const { locations } = data;
+    console.log("Background locations:", locations);
+    
+    // Відображення Alert з даними
+    Alert.alert("New Location", `Background location: ${JSON.stringify(locations)}`);
+  } else {
+    console.log("No data received");
   }
 });
 
@@ -72,15 +77,23 @@ const Signin = ({ navigation }) => {
 
   // Реєстрація фонової задачі при завантаженні компонента
   useEffect(() => {
-    const registerBackgroundTask = async () => {
-      await BackgroundFetch.registerTaskAsync(BACKGROUND_TASK_NAME, {
-        minimumInterval: 1, // Інтервал 1 секунда
-        stopOnTerminate: false, // Продовжувати після закриття додатка
-        startOnBoot: true, // Запускати при завантаженні пристрою
+    const startBackgroundLocationTracking = async () => {
+      // Запит на дозвіл на використання геолокації
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        Alert.alert('Permission denied', 'You need to enable location permissions.');
+        return;
+      }
+
+      // Запуск фонового трекінгу
+      await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
+        accuracy: Location.Accuracy.BestForNavigation,
+        distanceInterval: 10, // Змінюйте на вашу потребу
+        deferredUpdatesInterval: 1000, // Змінюйте на вашу потребу
       });
     };
 
-    registerBackgroundTask();
+    startBackgroundLocationTracking();
   }, []);
 
   return (

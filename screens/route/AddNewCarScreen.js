@@ -115,6 +115,19 @@ const AddNewCarScreen = ({ route, navigation }) => {
             </View>
 
             <View>
+              <Text style={{ fontWeight: "500" }}>Вантажопідйомність</Text>
+              <TextInput
+                style={globalStyles.input}
+                keyboardType="numeric"
+                placeholder="3 т"
+                value={car.number}
+                onChangeText={(text) =>
+                  setRoute((prevCar) => ({ ...prevCar, number: text }))
+                }
+              />
+            </View>
+
+            <View>
               <Text style={{ fontWeight: "500" }}>об'єм двигуна</Text>
               <TextInput
                 keyboardType="numeric"

@@ -4,9 +4,11 @@ import { getPhomeNumberFromStorage } from "../../services/StorageService";
 
 const API_URL = config.API_URL;
 export const registerNewRoute = async (
-  source,
+  sourceCountry,
+  sourceCity,
   dayOfDepartureFromSource,
-  destination,
+  destinationCountry,
+  destinationCity,
   dayOfDepartureFromDestination
 ) => {
   try {
@@ -14,9 +16,11 @@ export const registerNewRoute = async (
     const response = await axios.post(
       `${API_URL}/route-tracker/routs`,
       {
-        source,
+        sourceCountry,
+        sourceCity,
         dayOfDepartureFromSource,
-        destination,
+        destinationCountry,
+        destinationCity,
         dayOfDepartureFromDestination,
         ownerPhoneNumber,
       },
@@ -46,11 +50,10 @@ const convertDaysToWords = (route) => {
     route.dayNumberOfDepartureFromSource = route.dayOfDepartureFromSource;
     route.dayOfDepartureFromSource = dayWord;
   }
-  dayWord = dayMap[route.dayOfDepartureFromDistinction];
+  dayWord = dayMap[route.dayOfDepartureFromDestination];
   if (dayWord) {
-    route.dayNumberOfDepartureFromDistinction =
-      route.dayOfDepartureFromDistinction;
-    route.dayOfDepartureFromDistinction = dayWord;
+    route.dayNumberOfDepartureFromDistinction = route.dayOfDepartureFromDistinction;
+    route.dayOfDepartureFromDestination = dayWord;
   }
 };
 

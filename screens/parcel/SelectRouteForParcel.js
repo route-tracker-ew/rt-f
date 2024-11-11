@@ -33,13 +33,15 @@ const SelectRouteForParcel = ({ route, navigation }) => {
 
   const handleSelectedDay = (selectedDay) => {
     try {
-      if (
-        !markedDates[selectedDay.dateString] ||
-        markedDates[selectedDay.dateString].disabled
-      ) {
-        alert("Ви можете вибрати тільки зазначені дати.");
-        return;
-      }
+    
+      // if (
+      //   !markedDates[selectedDay.dateString] ||
+      //   markedDates[selectedDay.dateString].disabled
+        
+      // ) {
+      //   alert("Ви можете вибрати тільки зазначені дати.");
+      //   return;
+      // }
       setShowCalendar(false);
       navigation.navigate("Pickup", {
         day: selectedDay.timestamp,
@@ -50,90 +52,90 @@ const SelectRouteForParcel = ({ route, navigation }) => {
     }
   };
 
-  const getDatesForEveryMonth = (
-    dayNumberOfDepartureFromSource,
-    dayNumberOfDepartureFromDistinction
-  ) => {
-    const dates = {};
-    const today = new Date();
-    const currentYear = today.getFullYear();
+  // const getDatesForEveryMonth = (
+  //   dayNumberOfDepartureFromSource,
+  //   dayNumberOfDepartureFromDestination
+  // ) => {
+  //   const dates = {};
+  //   const today = new Date();
+  //   const currentYear = today.getFullYear();
 
-    let dateOfDepartureFromSource = new Date(
-      currentYear,
-      today.getMonth(),
-      today.getDate()
-    );
+  //   let dateOfDepartureFromSource = new Date(
+  //     currentYear,
+  //     today.getMonth(),
+  //     today.getDate()
+  //   );
 
-    for (
-      let month = dateOfDepartureFromSource.getMonth();
-      month < 12;
-      month++
-    ) {
-      dateOfDepartureFromSource.setMonth(month);
-      dateOfDepartureFromSource.setDate(1);
+  //   for (
+  //     let month = dateOfDepartureFromSource.getMonth();
+  //     month < 12;
+  //     month++
+  //   ) {
+  //     dateOfDepartureFromSource.setMonth(month);
+  //     dateOfDepartureFromSource.setDate(1);
 
-      while (
-        dateOfDepartureFromSource.getDay() !== dayNumberOfDepartureFromSource
-      ) {
-        dateOfDepartureFromSource.setDate(
-          dateOfDepartureFromSource.getDate() + 1
-        );
-      }
-      while (dateOfDepartureFromSource.getMonth() === month) {
-        if (dateOfDepartureFromSource >= today) {
-          let copyOfdateOfDepartureFromSource = new Date(
-            dateOfDepartureFromSource
-          );
+  //     while (
+  //       dateOfDepartureFromSource.getDay() !== dayNumberOfDepartureFromSource
+  //     ) {
+  //       dateOfDepartureFromSource.setDate(
+  //         dateOfDepartureFromSource.getDate() + 1
+  //       );
+  //     }
+  //     while (dateOfDepartureFromSource.getMonth() === month) {
+  //       if (dateOfDepartureFromSource >= today) {
+  //         let copyOfdateOfDepartureFromSource = new Date(
+  //           dateOfDepartureFromSource
+  //         );
 
-          for (
-            let i = dayNumberOfDepartureFromSource;
-            i <= dayNumberOfDepartureFromDistinction;
-            i++
-          ) {
-            dates[copyOfdateOfDepartureFromSource.toISOString().split("T")[0]] =
-              {
-                selected: true,
-                selectedColor: "black",
-                selectedTextColor: "white",
-              };
-            copyOfdateOfDepartureFromSource.setDate(
-              copyOfdateOfDepartureFromSource.getDate() + 1
-            );
-          }
-        }
-        dateOfDepartureFromSource.setDate(
-          dateOfDepartureFromSource.getDate() + 7
-        );
-      }
-    }
-    return dates;
-  };
+  //         for (
+  //           let i = dayNumberOfDepartureFromSource;
+  //           i <= dayNumberOfDepartureFromDestination;
+  //           i++
+  //         ) {
+  //           dates[copyOfdateOfDepartureFromSource.toISOString().split("T")[0]] =
+  //             {
+  //               selected: true,
+  //               selectedColor: "black",
+  //               selectedTextColor: "white",
+  //             };
+  //           copyOfdateOfDepartureFromSource.setDate(
+  //             copyOfdateOfDepartureFromSource.getDate() + 1
+  //           );
+  //         }
+  //       }
+  //       dateOfDepartureFromSource.setDate(
+  //         dateOfDepartureFromSource.getDate() + 7
+  //       );
+  //     }
+  //   }
+  //   return dates;
+  // };
 
-  const getAllDatesForCurrentMonth = () => {
-    const dates = {};
-    const now = new Date();
-    const year = now.getFullYear();
-    for (let month = now.getMonth(); month < 12; month++) {
-      const daysInMonth = new Date(year, month + 1, 0).getDate();
-      for (let day = 1; day <= daysInMonth; day++) {
-        const date = new Date(year, month, day).toISOString().split("T")[0];
-        if (new Date(date) >= now) {
-          dates[date] = { disabled: true, disableTouchEvent: true };
-        }
-      }
-    }
-    return dates;
-  };
+  // const getAllDatesForCurrentMonth = () => {
+  //   const dates = {};
+  //   const now = new Date();
+  //   const year = now.getFullYear();
+  //   for (let month = now.getMonth(); month < 12; month++) {
+  //     const daysInMonth = new Date(year, month + 1, 0).getDate();
+  //     for (let day = 1; day <= daysInMonth; day++) {
+  //       const date = new Date(year, month, day).toISOString().split("T")[0];
+  //       if (new Date(date) >= now) {
+  //         dates[date] = { disabled: true, disableTouchEvent: true };
+  //       }
+  //     }
+  //   }
+  //   return dates;
+  // };
 
-  const markedDates = selectedRoute
-    ? {
-        ...getAllDatesForCurrentMonth(),
-        ...getDatesForEveryMonth(
-          selectedRoute.dayNumberOfDepartureFromSource + 1,
-          selectedRoute.dayNumberOfDepartureFromDistinction + 1
-        ),
-      }
-    : {};
+  // const markedDates = selectedRoute
+  //   ? {
+  //       ...getAllDatesForCurrentMonth(),
+  //       ...getDatesForEveryMonth(
+  //         selectedRoute.dayNumberOfDepartureFromSource + 1,
+  //         selectedRoute.dayNumberOfDepartureFromDestination + 1
+  //       ),
+  //     }
+  //   : {};
 
   return (
     <SafeAreaView>
@@ -148,7 +150,7 @@ const SelectRouteForParcel = ({ route, navigation }) => {
             <View style={styles.modalContainer}>
               <View style={styles.calendarContainer}>
                 <Calendar
-                  markedDates={markedDates}
+                  // markedDates={markedDates}
                   onDayPress={(day) => {
                     handleSelectedDay(day);
                   }}
@@ -167,9 +169,10 @@ const SelectRouteForParcel = ({ route, navigation }) => {
           {routes.map((routeInfo) => (
             <View style={globalStyles.intoMapConatiner} key={routeInfo.id}>
               <ParcelRouteInfo
-                routeTitle={`${routeInfo.source} - ${routeInfo.distinction}`}
+                routeTitle={`${routeInfo.sourceCountry} - ${routeInfo.destinationCountry}`}
+                routeTitle3={`${routeInfo.sourceCity} - ${routeInfo.destinationCity}`}
                 dateToCountry={routeInfo.dayOfDepartureFromSource}
-                dateFromCountry={routeInfo.dayOfDepartureFromDistinction}
+                dateFromCountry={routeInfo.dayOfDepartureFromDestination}
                 drivers={0}
                 cars={0}
                 id={routeInfo.id}

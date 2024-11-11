@@ -18,18 +18,22 @@ const CreateNewRouteScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
 
   const [route, setRoute] = useState({
-    source: "",
+    sourceCountry: "",
+    sourceCity: "",
     dayOfDepartureFromSource: { label: "", value: 0 },
-    destination: "",
+    destinationCountry: "",
+    destinationCity: "",
     dayOfDepartureFromDestination: { label: "", value: 0 },
   });
 
   const handleCreateNewRouteRequest = async () => {
     try {
       if (
-        !route.source ||
+        !route.sourceCountry ||
+        !route.sourceCity ||
         !route.dayOfDepartureFromSource.value ||
-        !route.destination ||
+        !route.destinationCountry ||
+        !route.destinationCity ||
         !route.dayOfDepartureFromDestination.value
       ) {
         Alert.alert("Будь ласка, переконайтеся, що ваші поля заповнені!");
@@ -37,18 +41,20 @@ const CreateNewRouteScreen = ({ navigation }) => {
       }
       setLoading(true);
       await registerNewRoute(
-        route.source,
+        route.sourceCountry,
+        route.sourceCity,
         route.dayOfDepartureFromSource.value,
-        route.destination,
+        route.destinationCountry,
+        route.destinationCity,
         route.dayOfDepartureFromDestination.value
       );
       navigation.navigate("Home");
       Alert.alert(
         "Вітаємо!",
         "Маршрут " +
-          route.source +
+          route.sourceCountry +
           " - " +
-          route.destination +
+          route.destinationCountry +
           " був успішно створений"
       );
     } catch (error) {
@@ -65,13 +71,25 @@ const CreateNewRouteScreen = ({ navigation }) => {
         <SafeAreaView>
           <View style={globalStyles.createNewContainer}>
             <View>
-              <Text style={{ fontWeight: "500" }}>Місце відправлення</Text>
+              <Text style={{ fontWeight: "500" }}>Країна відправлення</Text>
               <TextInput
                 style={globalStyles.input}
                 placeholder="Україна"
-                value={route.source}
+                value={route.sourceCountry}
                 onChangeText={(text) =>
-                  setRoute((prevRoute) => ({ ...prevRoute, source: text }))
+                  setRoute((prevRoute) => ({ ...prevRoute, sourceCountry: text }))
+                }
+              />
+            </View>
+
+            <View>
+              <Text style={{ fontWeight: "500" }}>Місто відправлення</Text>
+              <TextInput
+                style={globalStyles.input}
+                placeholder="Вінниця"
+                value={route.sourceCity}
+                onChangeText={(text) =>
+                  setRoute((prevRoute) => ({ ...prevRoute, sourceCity: text }))
                 }
               />
             </View>
@@ -91,13 +109,25 @@ const CreateNewRouteScreen = ({ navigation }) => {
             </View>
 
             <View>
-              <Text style={{ fontWeight: "500" }}>Місце призначення</Text>
+              <Text style={{ fontWeight: "500" }}>Країна призначення</Text>
               <TextInput
                 style={globalStyles.input}
                 placeholder="Німеччина"
-                value={route.destination}
+                value={route.destinationCountry}
                 onChangeText={(text) =>
-                  setRoute((prevRoute) => ({ ...prevRoute, destination: text }))
+                  setRoute((prevRoute) => ({ ...prevRoute, destinationCountry: text }))
+                }
+              />
+            </View>
+
+            <View> 
+              <Text style={{ fontWeight: "500" }}>Місто призначення</Text>
+              <TextInput
+                style={globalStyles.input}
+                placeholder="Крефельд"
+                value={route.destinationCity}
+                onChangeText={(text) =>
+                  setRoute((prevRoute) => ({ ...prevRoute, destinationCity: text }))
                 }
               />
             </View>

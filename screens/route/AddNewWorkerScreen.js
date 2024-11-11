@@ -57,7 +57,7 @@ const AddNewWorkerScreen = ({ route, navigation }) => {
           worker.firstName +
           " " +
           worker.lastName +
-          " був успішно найнятий"
+          " був успішно доданий"
       );
     } catch (error) {
       alert(error.message);
@@ -122,7 +122,7 @@ const AddNewWorkerScreen = ({ route, navigation }) => {
                   <ActivityIndicator size="small" color="white" />
                 ) : (
                   <Text style={globalStyles.createButtonTxt}>
-                    {!showFullNameInput ? "Далі" : "Найняти"}
+                    {!showFullNameInput ? "Далі" : "Додати"}
                   </Text>
                 )}
               </TouchableOpacity>

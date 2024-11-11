@@ -21,9 +21,11 @@ const RouteScreen = ({ route, navigation }) => {
           {routes.map((routeInfo) => (
             <View style={globalStyles.intoMapConatiner} key={routeInfo.id}>
               <RouteInfo
-                routeTitle={`${routeInfo.source} - ${routeInfo.distinction}`}
+                routeTitle={`${routeInfo.sourceCountry} - ${routeInfo.destinationCountry}`}
+                sourceCity = {routeInfo.sourceCity}
+                destinationCity ={routeInfo.destinationCity}
                 dateToCountry={routeInfo.dayOfDepartureFromSource}
-                dateFromCountry={routeInfo.dayOfDepartureFromDistinction}
+                dateFromCountry={routeInfo.dayOfDepartureFromDestination}
                 drivers={routeInfo.workers}
                 cars={routeInfo.cars}
                 id={routeInfo.id}

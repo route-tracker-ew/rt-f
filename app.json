@@ -3,6 +3,14 @@
     "name": "Tracker",
     "slug": "Tracker",
     "version": "1.0.0",
+    "extra": {
+      "eas": {
+        "projectId": "b41d1f64-d948-4b1e-9674-8ed478c124c9"
+      }
+    },
+    "android": {
+      "package": "com.artemlicherep.Tracker"
+    },
     "plugins": [
       "expo-secure-store"
     ]

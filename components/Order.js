@@ -1,9 +1,54 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import Checkbox from "expo-checkbox";
 import React from "react";
 import DeliveryStepper from "./DeliveryStepper";
-const Order = ({ phoneNumber, amount, price, from, to, currentStep }) => {
+import { getParcelById } from "../services/parcel/ParcelService";
+
+const Order = ({id ,phoneNumber, amount, price, from, to, currentStep, navigation }) => {
+  const handlePressOrder = async () => {
+    // setLoading(true)
+    try {
+      var parcelInfo = await getParcelById(id)
+      var sender = parcelInfo.sender
+      var receiver = parcelInfo.receiver
+      navigation.navigate("EditPickupScreen", {
+        id:id,
+        sourceCity: parcelInfo.sourceCity,
+        sourceCountry: parcelInfo.sourceCountry,
+        sourceStreet: parcelInfo.sourceStreet,
+        sourceHouseNumber: parcelInfo.sourceHouseNumber,
+        sourceFlatNumber: parcelInfo.sourceFlatNumber,
+
+        senderPhoneNumber: sender.phoneNumber,
+        senderFirstName: sender.firstName,
+        senderLastName: sender.lastName,
+
+        destinationCountry: parcelInfo.destinationCountry,
+        destinationCity: parcelInfo.destinationCity,
+        destinationStreet: parcelInfo.destinationStreet,
+        destinationHouseNumber: parcelInfo.destinationHouseNumber,
+        destinationFlat: parcelInfo.destinationFlat,
+        deliveryService: parcelInfo.deliveryService,
+        destinationPostNumber: parcelInfo.destinationPostNumber,
+
+        receiverPhoneNumber: receiver.phoneNumber,
+        receiverFirstName: receiver.firstName,
+        receiverLastName: receiver.lastName,
+
+        price: parcelInfo.price,
+        amount: parcelInfo.amount,
+        weight:3
+  
+      });
+    } catch ({ message }) {
+      alert(message);
+    }finally{
+      // setLoading(false);
+    }
+  };
+
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={handlePressOrder}>
       <View style={styles.container}>
         <View style={styles.dlvryHead}>
           <View style={{ marginLeft: 5, marginTop: 5 }}>
@@ -35,6 +80,13 @@ const Order = ({ phoneNumber, amount, price, from, to, currentStep }) => {
             <Text style={styles.t}>{to}</Text>
           </View>
         </View>
+
+        <View style={styles.orderTitle}>
+          <View style={styles.checkboxContainer}>
+            <Checkbox style={styles.checkbox} />
+            <Text style={styles.checkboxLabel}>Доставлено</Text>
+          </View>
+        </View>
       </View>
     </TouchableOpacity>
   );
@@ -46,7 +98,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "column",
     justifyContent: "flex-start",
-    height: 165,
+    height: 190,
     width: 350,
     paddingTop: 10,
     borderRadius: 10,
@@ -58,8 +110,8 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-
     elevation: 5,
+    marginBottom: 15,
   },
   dlvryHead: {
     flexDirection: "row",
@@ -87,5 +139,13 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: 40,
+  },
+  checkboxContainer: {
+    paddingTop: 20,
+    flexDirection: "row",
+    alignItems: "center", // Вирівнювання по вертикалі
+  },
+  checkboxLabel: {
+    marginLeft: 8, // Відступ між чекбоксом і текстом
   },
 });

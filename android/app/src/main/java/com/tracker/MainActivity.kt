@@ -7,6 +7,8 @@ import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.fabricEnabled
 import com.facebook.react.defaults.DefaultReactActivityDelegate
+import com.swmansion.gesturehandler.react.RNGestureHandlerEnabledRootView
+
 
 import expo.modules.ReactActivityDelegateWrapper
 
@@ -58,4 +60,12 @@ class MainActivity : ReactActivity() {
       // because it's doing more than [Activity.moveTaskToBack] in fact.
       super.invokeDefaultOnBackPressed()
   }
+override fun createReactActivityDelegate(): ReactActivityDelegate {
+    return object : ReactActivityDelegate(this, mainComponentName) {
+        override fun createRootView(): ReactRootView {
+            return RNGestureHandlerEnabledRootView(this@MainActivity)
+        }
+    }
+}
+  
 }

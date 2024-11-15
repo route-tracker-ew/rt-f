@@ -131,6 +131,71 @@ export const updateParcel = async (
   }
 };
 
+export const acceptParcel = async (
+  id,
+  sourceCity,
+  sourceCountry,
+  sourceStreet,
+  sourceHouseNumber,
+  sourceFlatNumber,
+  senderPhoneNumber,
+  senderFirstName,
+  senderLastName,
+  destinationCountry,
+  destinationCity,
+  destinationStreet,
+  destinationHouseNumber,
+  destinationFlatNumber,
+  deliveryService,
+  destinationPostNumber,
+  receiverPhoneNumber,
+  receiverFirstName,
+  receiverLastName,
+  estimatedPicKUpDate,
+  routeId,
+  amount,
+  price,
+  weight
+) => {
+  try {
+    const response = await axios.put(
+      `${API_URL}/route-tracker/parcels/accept`,
+      {
+        id,
+        sourceCity,
+        sourceCountry,
+        sourceStreet,
+        sourceHouseNumber,
+        sourceFlatNumber,
+        senderPhoneNumber,
+        senderFirstName,
+        senderLastName,
+        destinationCountry,
+        destinationCity,
+        destinationStreet,
+        destinationHouseNumber,
+        destinationFlatNumber,
+        deliveryService,
+        destinationPostNumber,
+        receiverPhoneNumber,
+        receiverFirstName,
+        receiverLastName,
+        estimatedPicKUpDate,
+        routeId,
+        amount,
+        price,
+        weight,
+      },
+      {
+        timeout: 10000, // 10 seconds
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const getSpecifiedParcels = async (routeId, estimatedPickUp) => {
   try {
     const token = await getTokenFromStorage();
@@ -139,6 +204,36 @@ export const getSpecifiedParcels = async (routeId, estimatedPickUp) => {
         routeId,
         estimatedPickUp,
       },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      timeout: 10000, // 10 секунд
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const rejectParcel= async (parcelId) => {
+  try {
+    const token = await getTokenFromStorage();
+    const response = await axios.put(`${API_URL}/route-tracker/parcels/reject?parcelId=${parcelId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      timeout: 10000, // 10 секунд
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getParcelsRequest = async () => {
+  try {
+    const token = await getTokenFromStorage();
+    const response = await axios.get(`${API_URL}/route-tracker/parcels/all/requested`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

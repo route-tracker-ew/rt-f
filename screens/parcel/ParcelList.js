@@ -25,8 +25,6 @@ const getParcelStatusOrder = (status) => {
 const ParcelList = ({ route, navigation }) => {
   const parcels  = route.params.parcels || [];
 
-  console.log(parcels[0].id)
-
   if (parcels.length === 0) {
     return (
       <SafeAreaView style={globalStyles.centerConatiner}>

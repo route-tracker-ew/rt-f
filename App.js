@@ -39,6 +39,13 @@ import EditReceiverAddressScreen from "./screens/parcel/EditReciverAddressScreen
 import EditReceiverScreen from "./screens/parcel/EditReceiverScreen";
 import EditSenderAddressScreen from "./screens/parcel/EditSenderAddressScreen";
 import EditSenderScreen from "./screens/parcel/EditSenderScreen";
+import OptimalRoutes from "./screens/OptimalRoutes";
+import RequestParcelScreen from "./screens/parcel/request/RequestParcelScreen";
+import RequestPickupScreen from "./screens/parcel/request/RequestPickupScreen";
+import RequestReceiverScreen from "./screens/parcel/request/RequestReceiverScreen";
+import RequestReceiverAddressScreen from "./screens/parcel/request/RequestReciverAddressScreen";
+import RequestSenderAddressScreen from "./screens/parcel/request/RequestSenderAddressScreen";
+import RequestSenderScreen from "./screens/parcel/request/RequestSenderScreen";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -148,6 +155,17 @@ function App() {
           name="Home"
           component={Home}
           options={{ headerShown: false, gestureEnabled: false }}
+        />
+
+        <Stack.Screen
+          name="OptimalRoutes"
+          component={OptimalRoutes}
+          options={({ navigation }) => ({
+            headerTintColor: "black",
+            headerTitle: "Оптимальний маршурт",
+            headerBackTitle: "Назад",
+            navigation: navigation,
+          })}
         />
         <Stack.Screen
           name="Pickup"
@@ -376,7 +394,7 @@ function App() {
           component={EditPickupScreen}
           options={({ navigation }) => ({
             headerTintColor: "black",
-            headerTitle: "Посилка",
+            headerTitle: "Редагування посилки",
             headerBackTitle: "Назад",
             navigation: navigation,
           })}
@@ -387,7 +405,7 @@ function App() {
           component={EditParcelScreen}
           options={({ navigation }) => ({
             headerTintColor: "black",
-            headerTitle: "Посилка",
+            headerTitle: "Редагування посилки",
             headerBackTitle: "Назад",
             navigation: navigation,
           })}
@@ -463,6 +481,118 @@ function App() {
           <Stack.Screen
           name="EditReceiverScreen"
           component={EditReceiverScreen}
+          options={({}) => ({
+            headerShown: false,
+            cardStyleInterpolator: ({ current, layouts }) => {
+              return {
+                cardStyle: {
+                  transform: [
+                    {
+                      translateY: current.progress.interpolate({
+                        inputRange: [0, 1],
+                        outputRange: [layouts.screen.height, 0],
+                      }),
+                    },
+                  ],
+                },
+              };
+            },
+          })}
+        />
+
+
+<Stack.Screen
+          name="RequestPickupScreen"
+          component={RequestPickupScreen}
+          options={({ navigation }) => ({
+            headerTintColor: "black",
+            headerTitle: "Редагування посилки",
+            headerBackTitle: "Назад",
+            navigation: navigation,
+          })}
+
+        /> 
+        <Stack.Screen
+          name="RequestParcelScreen"
+          component={RequestParcelScreen}
+          options={({ navigation }) => ({
+            headerTintColor: "black",
+            headerTitle: "Редагування посилки",
+            headerBackTitle: "Назад",
+            navigation: navigation,
+          })}
+        />
+
+        <Stack.Screen
+          name="RequestSenderScreen"
+          component={RequestSenderScreen}
+          options={({}) => ({
+            headerShown: false,
+            cardStyleInterpolator: ({ current, layouts }) => {
+              return {
+                cardStyle: {
+                  transform: [
+                    {
+                      translateY: current.progress.interpolate({
+                        inputRange: [0, 1],
+                        outputRange: [layouts.screen.height, 0],
+                      }),
+                    },
+                  ],
+                },
+              };
+            },
+          })}
+        />
+
+        <Stack.Screen
+          name="RequestSenderAddressScreen"
+          component={RequestSenderAddressScreen}
+          options={({}) => ({
+            headerShown: false,
+            cardStyleInterpolator: ({ current, layouts }) => {
+              return {
+                cardStyle: {
+                  transform: [
+                    {
+                      translateY: current.progress.interpolate({
+                        inputRange: [0, 1],
+                        outputRange: [layouts.screen.height, 0],
+                      }),
+                    },
+                  ],
+                },
+              };
+            },
+          })}
+        />
+
+        <Stack.Screen
+          name="RequestReceiverAddressScreen"
+          component={RequestReceiverAddressScreen}
+          options={({}) => ({
+            headerShown: false,
+            cardStyleInterpolator: ({ current, layouts }) => {
+              return {
+                cardStyle: {
+                  transform: [
+                    {
+                      translateY: current.progress.interpolate({
+                        inputRange: [0, 1],
+                        outputRange: [layouts.screen.height, 0],
+                      }),
+                    },
+                  ],
+                },
+              };
+            },
+          })}
+        />
+
+
+          <Stack.Screen
+          name="RequestReceiverScreen"
+          component={RequestReceiverScreen}
           options={({}) => ({
             headerShown: false,
             cardStyleInterpolator: ({ current, layouts }) => {

@@ -7,12 +7,15 @@ import {
   Image,
   Keyboard,
   TouchableWithoutFeedback,
+  ScrollView,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SecondTab from "../components/SecondTab";
-import Order from "../components/Order";
+import RequestOrder from "../components/RequestOrder";
+import { getParcelsRequest } from "../services/parcel/ParcelService";
+
 const Dashboard = ({ navigation }) => {
   const user = true;
   if (!user) {
@@ -20,6 +23,25 @@ const Dashboard = ({ navigation }) => {
     navigation.navigate("Login");
   }
   const [search, setSearch] = useState("");
+  const [orders, setOrders] = useState([]); // Стан для збереження посилок
+
+  // Функція для отримання списку посилок (можна замінити на реальний API)
+  const fetchOrders = async () => {
+    // Імітація отримання даних
+    var fetchedOrders = await getParcelsRequest();
+    setOrders(fetchedOrders); // Збереження отриманих посилок у стан
+  };
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      setOrders([]);  // Очищаємо стан перед отриманням нових даних
+      fetchOrders();   // Отримуємо нові дані
+    });
+
+    // Очистка слухача, коли екран більше не активний
+    return unsubscribe;
+  }, [navigation]);
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <SafeAreaView style={styles.container}>
@@ -69,35 +91,38 @@ const Dashboard = ({ navigation }) => {
               fontWeight: "600",
             }}
           >
-            Поточні відвантаження
+            Очікують на підтвердження
           </Text>
-          <TouchableOpacity>
-            <Text
+        </View>
+        <ScrollView
+            contentContainerStyle={styles.ordersContainer}
+            showsVerticalScrollIndicator={false}
+          >
+            <View
               style={{
-                fontSize: 12,
-                color: "grey",
-                marginTop: 3,
+                justifyContent: "center",
+                alignItems: "center",
+                marginTop: 20,
               }}
             >
-              переглянути всі
-            </Text>
-          </TouchableOpacity>
-        </View>
-        <View
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-            marginTop: 20,
-          }}
-        >
-          <Order
-            orderid={"#MRF007RSR"}
-            status={"on the way"}
-            date={"13 September 2023"}
-            from={"mrBata"}
-            to={"beingRafie"}
-          />
-        </View>
+              {orders.map((order, index) => (
+                <RequestOrder
+                  id={order.id}
+                  key={index}
+                  phoneNumber={order.receiver.phoneNumber}
+                  amount={order.amount}
+                  price={"?"}
+                  status={order.status}
+                  date={order.date}
+                  fromCountry={order.sourceCountry}
+                  toCountry={order.destinationCountry}
+                  from={order.sourceCity}
+                  to={order.destinationCity}
+                  navigation={navigation}
+                />
+              ))}
+            </View>
+          </ScrollView>
       </SafeAreaView>
     </TouchableWithoutFeedback>
   );

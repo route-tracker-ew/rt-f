@@ -26,6 +26,10 @@ const SecondTab = ({ navigation }) => {
   const hanelQrCode = () => {
     navigation.navigate("QrCodeScreen");
   };
+
+  const handleBestRoute = () => {
+    navigation.navigate("OptimalRoutes");
+  };
   return (
     <View style={styles.nav}>
       {/* ---------------------1 */}
@@ -36,7 +40,7 @@ const SecondTab = ({ navigation }) => {
 
       {/* ---------------------2 */}
       <TouchableOpacity style={styles.icon} onPress={handleParcelList}>
-        <Image source={require("../assets/icons/17.png")} style={styles.ipic} />
+        <Image source={require("../assets/icons/2.png")} style={styles.ipic} />
         <Text style={styles.itxt}>посилки</Text>
       </TouchableOpacity>
 
@@ -46,9 +50,9 @@ const SecondTab = ({ navigation }) => {
         <Text style={styles.itxt}>Qr-code</Text>
       </TouchableOpacity>
       {/* ---------------------4 */}
-      <TouchableOpacity style={styles.icon}>
-        <Image source={require("../assets/icons/4.png")} style={styles.ipic} />
-        <Text style={styles.itxt}>Історія</Text>
+      <TouchableOpacity style={styles.icon} onPress={handleBestRoute}>
+        <Image source={require("../assets/icons/18.png")} style={styles.ipic} />
+        <Text style={styles.itxt}>маршрут</Text>
       </TouchableOpacity>
     </View>
   );

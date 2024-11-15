@@ -18,6 +18,7 @@ import LoadingModal from "../../components/LoadingModal";
 const SelectRouteForParcels = ({ route, navigation }) => {
   const [showCalendar, setShowCalendar] = useState(false);
   const [selectedRoute, setSelectedRoute] = useState(null);
+  const [selectedRoute2, setSelectedRoute2] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const routes = route.params.routes || [];
@@ -29,9 +30,10 @@ const SelectRouteForParcels = ({ route, navigation }) => {
     );
   }
 
-  const handleParcelRouteInfoPress = (routeInfo) => {
-    setSelectedRoute(routeInfo);
-    setShowCalendar(true);
+  const handleParcelRouteInfoPress = async (routeInfo) => {
+   await setSelectedRoute(routeInfo);
+   await setSelectedRoute2(routeInfo)
+   await setShowCalendar(true);
   };
 
   const handleSelectedDay = async (selectedDay) => {
@@ -45,6 +47,7 @@ const SelectRouteForParcels = ({ route, navigation }) => {
       //   alert("Ви можете вибрати тільки зазначені дати.");
       //   return;
       // }
+      console.log(selectedRoute.id)
       setShowCalendar(false);
       var parcels = await getSpecifiedParcels(selectedRoute.id, selectedDay.dateString);
       navigation.navigate("ParcelList", {
@@ -52,7 +55,7 @@ const SelectRouteForParcels = ({ route, navigation }) => {
         routeId: selectedRoute.id,
         navigation: navigation
       });
-      // setLoading(false);
+      setLoading(false);
     } catch ({ message }) {
       alert(message);
     }finally{

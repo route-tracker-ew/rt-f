@@ -24,7 +24,7 @@ const SecondTab = ({ navigation }) => {
   };
 
   const hanelQrCode = () => {
-    navigation.navigate("QrCodeScreen");
+    navigation.navigate("QrCodeScreen", {navigation: navigation});
   };
 
   const handleBestRoute = () => {

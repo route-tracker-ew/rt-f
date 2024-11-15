@@ -76,14 +76,16 @@ const RequestOrder = ({id ,phoneNumber, amount, price, from, fromCountry ,to, to
           <DeliveryStepper currentStep={currentStep} />
         </View>
         <View>
-          <View style={styles.u}>
-            <Text style={styles.t}> {fromCountry} | {from}</Text>
-           
-          </View>
-          <View style={styles.u}>
-            <Text style={styles.t}>{toCountry} | {to}</Text>
-          </View>
-        </View>
+  <View style={styles.u}>
+    <Text style={styles.t}> {fromCountry} | {from}</Text>
+  </View>
+  <View style={styles.arrowContainer}>
+    <Text style={styles.arrow}>↓</Text>
+  </View>
+  <View style={styles.u}>
+    <Text style={styles.t}>{toCountry} | {to}</Text>
+  </View>
+</View>
       </View>
     </TouchableOpacity>
   );
@@ -133,7 +135,7 @@ const styles = StyleSheet.create({
   },
   u: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "center",
     alignItems: "center",
     paddingHorizontal: 40,
   },
@@ -144,5 +146,13 @@ const styles = StyleSheet.create({
   },
   checkboxLabel: {
     marginLeft: 8, // Відступ між чекбоксом і текстом
+  },
+  arrowContainer: {
+    alignItems: "center", // Щоб стрілка була по центру між елементами
+    marginVertical: 5,    // Відступи зверху і знизу
+  },
+  arrow: {
+    fontSize: 18,         // Розмір стрілки
+    color: "#000",        // Колір стрілки
   },
 });

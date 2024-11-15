@@ -262,3 +262,19 @@ export const getParcelById = async (routeId) => {
     throw error;
   }
 }
+
+export const getParcelByPhone = async (phoneNumber) => {
+  try {
+    const token = await getTokenFromStorage();
+    const response = await axios.get(`${API_URL}/route-tracker/parcels/all/receiver?phoneNumber=${phoneNumber}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      timeout: 10000, // 10 секунд
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+

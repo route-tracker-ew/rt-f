@@ -5,7 +5,8 @@ const OptimalRoutes = () => {
   const cities = ['Вінниця', 'Хмельницький', 'Львів'];
 
   const openGoogleMaps = () => {
-    const url = `https://www.google.com/maps/dir/?api=1&origin=Vinnytsia&destination=Lviv&waypoints=Khmelnytskyi&travelmode=driving`;
+    const url = `https://www.google.com/maps/dir/?api=1&origin=Zaporizhzhia&destination=Rivne&waypoints=Dnipro|Kropyvnytskyi|Vinnytsia|Khmelnytskyi|Ternopil|Chernivtsi|Zhytomyr|Odesa|Kyiv|Kharkiv|Lviv|Cherkasy|Poltava|Mykolaiv|Zaporizhzhia|Rivne&travelmode=driving`;
+
     Linking.openURL(url);
   };
 

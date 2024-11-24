@@ -1,3 +1,4 @@
+// Додано компонент Button з логікою для виведення в консоль
 import {
   View,
   Text,
@@ -8,6 +9,7 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   ScrollView,
+  Button,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { Ionicons } from "@expo/vector-icons";
@@ -15,6 +17,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import SecondTab from "../components/SecondTab";
 import RequestOrder from "../components/RequestOrder";
 import { getParcelsRequest } from "../services/parcel/ParcelService";
+import { getAllWorkersRoutes } from "../services/route/RouteService";
 
 const Dashboard = ({ navigation }) => {
   const user = true;
@@ -22,25 +25,26 @@ const Dashboard = ({ navigation }) => {
     console.log("No user login");
     navigation.navigate("Login");
   }
-  const [search, setSearch] = useState("");
-  const [orders, setOrders] = useState([]); // Стан для збереження посилок
+  const [orders, setOrders] = useState([]); 
 
-  // Функція для отримання списку посилок (можна замінити на реальний API)
   const fetchOrders = async () => {
-    // Імітація отримання даних
     var fetchedOrders = await getParcelsRequest();
-    setOrders(fetchedOrders); // Збереження отриманих посилок у стан
+    setOrders(fetchedOrders); 
   };
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      setOrders([]);  // Очищаємо стан перед отриманням нових даних
-      fetchOrders();   // Отримуємо нові дані
+    const unsubscribe = navigation.addListener("focus", () => {
+      setOrders([]); 
+      fetchOrders();
     });
-
-    // Очистка слухача, коли екран більше не активний
     return unsubscribe;
   }, [navigation]);
+
+
+  const handleTrack = async () => {
+    const allRoutes = await getAllWorkersRoutes();
+    navigation.navigate("TrackerRouteForParcels", { routes: allRoutes })
+  };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -51,23 +55,11 @@ const Dashboard = ({ navigation }) => {
             <Text>Euro ways</Text>
           </View>
           <View style={styles.titleContainer}>
-            <Text style={styles.title}>Давайте відстежимо вашу посилку</Text>
-            <Text style={styles.subtitle}>
-              Будь ласка, введіть номер телефону для відстеження
-            </Text>
-          </View>
-          <View style={styles.search}>
-            <TextInput
-              style={styles.input}
-              placeholder="#XXXXXXXXXX"
-              value={search}
-              onChangeText={(text) => setSearch(text)}
-            />
-            <TouchableOpacity style={styles.searchicon}>
-              <Image
-                source={require("../assets/icons/search.png")}
-                style={styles.ipic}
-              />
+            <Text style={styles.title}>Давайте відстежимо вашу маршут</Text>
+
+            {/* Додано кнопку з логікою для виведення в консоль */}
+            <TouchableOpacity style={[styles.trackButton,styles.search]} onPress={handleTrack}>
+              <Text style={styles.trackButtonText}>Відстежити</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.tab}>
@@ -95,34 +87,34 @@ const Dashboard = ({ navigation }) => {
           </Text>
         </View>
         <ScrollView
-            contentContainerStyle={styles.ordersContainer}
-            showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.ordersContainer}
+          showsVerticalScrollIndicator={false}
+        >
+          <View
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              marginTop: 20,
+            }}
           >
-            <View
-              style={{
-                justifyContent: "center",
-                alignItems: "center",
-                marginTop: 20,
-              }}
-            >
-              {orders.map((order, index) => (
-                <RequestOrder
-                  id={order.id}
-                  key={index}
-                  phoneNumber={order.receiver.phoneNumber}
-                  amount={order.amount}
-                  price={"?"}
-                  status={order.status}
-                  date={order.date}
-                  fromCountry={order.sourceCountry}
-                  toCountry={order.destinationCountry}
-                  from={order.sourceCity}
-                  to={order.destinationCity}
-                  navigation={navigation}
-                />
-              ))}
-            </View>
-          </ScrollView>
+            {orders.map((order, index) => (
+              <RequestOrder
+                id={order.id}
+                key={index}
+                phoneNumber={order.receiver.phoneNumber}
+                amount={order.amount}
+                price={"?"}
+                status={order.status}
+                date={order.date}
+                fromCountry={order.sourceCountry}
+                toCountry={order.destinationCountry}
+                from={order.sourceCity}
+                to={order.destinationCity}
+                navigation={navigation}
+              />
+            ))}
+          </View>
+        </ScrollView>
       </SafeAreaView>
     </TouchableWithoutFeedback>
   );
@@ -196,6 +188,22 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     paddingHorizontal: 5,
     paddingVertical: 5,
+  },
+  // Стилі для кнопки на всю ширину
+  trackButton: {
+    marginTop: 10,
+    backgroundColor: "white",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 15,
+    width: "95%", // на всю ширину
+    alignSelf: "stretch", // розтягнути по ширині
+  },
+  trackButtonText: {
+    color: "black",
+    fontSize: 16,
+    fontWeight: "600",
+    textAlign: "center", // вирівнювання тексту по центру
   },
 });
 

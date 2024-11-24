@@ -46,6 +46,9 @@ import RequestReceiverScreen from "./screens/parcel/request/RequestReceiverScree
 import RequestReceiverAddressScreen from "./screens/parcel/request/RequestReciverAddressScreen";
 import RequestSenderAddressScreen from "./screens/parcel/request/RequestSenderAddressScreen";
 import RequestSenderScreen from "./screens/parcel/request/RequestSenderScreen";
+import TrackerRouteForParcels from "./screens/tracker/TrackerRouteForParcels";
+import TrackerCarScreen from "./screens/tracker/TrackerCarScreen";
+import MapScreen from "./screens/tracker/MapScreen";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -167,6 +170,40 @@ function App() {
             navigation: navigation,
           })}
         />
+
+        <Stack.Screen
+          name="MapScreen"
+          component={MapScreen}
+          options={({ navigation }) => ({
+            headerTintColor: "black",
+            headerTitle: "Gps-tracker",
+            headerBackTitle: "Назад",
+            navigation: navigation,
+          })}
+        />
+
+         <Stack.Screen
+          name="TrackerRouteForParcels"
+          component={TrackerRouteForParcels}
+          options={({ navigation }) => ({
+            headerTintColor: "black",
+            headerTitle: "Маршурти для трекінгу",
+            headerBackTitle: "Назад",
+            navigation: navigation,
+          })}
+        />
+
+         <Stack.Screen
+          name="TrackerCarScreen"
+          component={TrackerCarScreen}
+          options={({ navigation }) => ({
+            headerTintColor: "black",
+            headerTitle: "Авто для трекінгу",
+            headerBackTitle: "Назад",
+            navigation: navigation,
+          })}
+        />
+
         <Stack.Screen
           name="Pickup"
           component={PickupScreen}

@@ -70,7 +70,7 @@ const Signup = ({ navigation }) => {
         account.cfmPass
       );
       navigation.navigate("Signin");
-      alert(`Обліковий запис створено для ${firstName}`);
+      alert(`Обліковий запис створено для ${account.firstName}`);
     } catch (error) {
       alert(error.message);
       console.log(error);

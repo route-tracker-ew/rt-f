@@ -27,6 +27,7 @@ const AddNewCarScreen = ({ route, navigation }) => {
     number: "",
     capacity: "",
     fuel: "",
+    weight: "",
   });
 
   //handle pickup Request function
@@ -120,9 +121,9 @@ const AddNewCarScreen = ({ route, navigation }) => {
                 style={globalStyles.input}
                 keyboardType="numeric"
                 placeholder="3 т"
-                value={car.number}
+                value={car.weight}
                 onChangeText={(text) =>
-                  setRoute((prevCar) => ({ ...prevCar, number: text }))
+                  setRoute((prevCar) => ({ ...prevCar, weight: text }))
                 }
               />
             </View>

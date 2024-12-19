@@ -39,7 +39,7 @@ import EditReceiverAddressScreen from "./screens/parcel/EditReciverAddressScreen
 import EditReceiverScreen from "./screens/parcel/EditReceiverScreen";
 import EditSenderAddressScreen from "./screens/parcel/EditSenderAddressScreen";
 import EditSenderScreen from "./screens/parcel/EditSenderScreen";
-import OptimalRoutes from "./screens/OptimalRoutes";
+// import OptimalRoutes from "./screens/OptimalRoutes";
 import RequestParcelScreen from "./screens/parcel/request/RequestParcelScreen";
 import RequestPickupScreen from "./screens/parcel/request/RequestPickupScreen";
 import RequestReceiverScreen from "./screens/parcel/request/RequestReceiverScreen";
@@ -49,6 +49,9 @@ import RequestSenderScreen from "./screens/parcel/request/RequestSenderScreen";
 import TrackerRouteForParcels from "./screens/tracker/TrackerRouteForParcels";
 import TrackerCarScreen from "./screens/tracker/TrackerCarScreen";
 import MapScreen from "./screens/tracker/MapScreen";
+// import SelectOptimalRouteForParcels from "./screens/optimalRoute/SelectOptimalRouteForParcels";
+import SelectOptimalRouteForParcels from "./screens/optimalRoute/SelectOptimalRouteForParcels";
+import OptimalRoutes from "./screens/optimalRoute/OptimalRoutes";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -288,6 +291,16 @@ function App() {
           options={({}) => ({
             headerTintColor: "black",
             headerTitle: "Qr-code",
+            headerBackTitle: "Назад",
+          })}
+        />
+
+        <Stack.Screen
+          name="SelectOptimalRouteForParcels"
+          component={SelectOptimalRouteForParcels}
+          options={({}) => ({
+            headerTintColor: "black",
+            headerTitle: "Виберніть маршрут для розрахунку",
             headerBackTitle: "Назад",
           })}
         />

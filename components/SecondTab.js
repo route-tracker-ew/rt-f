@@ -27,8 +27,9 @@ const SecondTab = ({ navigation }) => {
     navigation.navigate("QrCodeScreen", {navigation: navigation});
   };
 
-  const handleBestRoute = () => {
-    navigation.navigate("OptimalRoutes");
+  const handleBestRoute = async () => {
+    const allRoutes = await getAllWorkersRoutes();
+    navigation.navigate("SelectOptimalRouteForParcels", { routes: allRoutes });
   };
   return (
     <View style={styles.nav}>

@@ -2,10 +2,10 @@ import * as Linking from 'expo-linking';
 import { Button, View, Text, ScrollView, StyleSheet } from 'react-native';
 
 const OptimalRoutes = () => {
-  const cities = ['Вінниця', 'Хмельницький', 'Львів'];
+  const cities = ['Вінниця', 'Хмельницький', 'Крефельд', 'Вуперталь'];
 
   const openGoogleMaps = () => {
-    const url = `https://www.google.com/maps/dir/?api=1&origin=Zaporizhzhia&destination=Rivne&waypoints=Dnipro|Kropyvnytskyi|Vinnytsia|Khmelnytskyi|Ternopil|Chernivtsi|Zhytomyr|Odesa|Kyiv|Kharkiv|Lviv|Cherkasy|Poltava|Mykolaiv|Zaporizhzhia|Rivne&travelmode=driving`;
+    const url = `https://www.google.com/maps/dir/?api=1&origin=Вінниця&destination=Крефельд&waypoints=Хмельницький|Вуперталь&travelmode=driving`;
 
     Linking.openURL(url);
   };

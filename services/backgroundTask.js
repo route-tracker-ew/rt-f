@@ -11,9 +11,6 @@ TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
     console.error("Помилка в фоновому завданні", error);
     return;
   }
-
-  console.log("1"); // Лог для перевірки фонової задачі
-
   if (data) {
     const { locations } = data;
     const { latitude, longitude } = locations[0].coords;

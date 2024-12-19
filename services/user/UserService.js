@@ -12,7 +12,6 @@ const getLocation = async () => {
   }
 
   let location = await Location.getCurrentPositionAsync({});
-  console.log(location);
 };
 
 export const getUserInfoByPhoneNumber = async (number) => {
@@ -67,7 +66,6 @@ export const registerCustomer = async (
     }
 
     if (response.status != 200) {
-      console.log(response.error);
       throw new Error("Щось пішло не так... Спробуйте пізніше");
     }
 
@@ -103,7 +101,6 @@ export const registerGps = async (
     }
 
     if (response.status != 200) {
-      console.log(response.error);
       throw new Error("Щось пішло не так... Спробуйте пізніше");
     }
 

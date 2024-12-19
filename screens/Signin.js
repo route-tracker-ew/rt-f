@@ -15,29 +15,6 @@ import LoadingModal from "../components/LoadingModal";
 import { saveFirstNameToStorage } from "../services/StorageService";
 import { savePhomeNumberToStorage } from "../services/StorageService";
 import { login } from "../services/auth/AuthService";
-import * as Location from 'expo-location';
-
-
-// Ім'я фонової задачі
-const LOCATION_TASK_NAME = 'background-location-task';
-
-// Реалізація фонової задачі
-TaskManager.defineTask(LOCATION_TASK_NAME, ({ data, error }) => {
-  if (error) {
-    console.error("Error in background task:", error);
-    return;
-  }
-
-  if (data) {
-    const { locations } = data;
-    console.log("Background locations:", locations);
-    
-    // Відображення Alert з даними
-    Alert.alert("New Location", `Background location: ${JSON.stringify(locations)}`);
-  } else {
-    console.log("No data received");
-  }
-});
 
 const Signin = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
@@ -56,7 +33,7 @@ const Signin = ({ navigation }) => {
   const handleSignin = async () => {
     setLoading(true);
     try {
-      await login(phoneNumber, "11111");
+      login(phoneNumber, password)
       const response = await getUserInfoByPhoneNumber(phoneNumber);
       if (response.phoneNumber != null) {
         if (response.firstName != null) {
@@ -74,27 +51,6 @@ const Signin = ({ navigation }) => {
       setLoading(false);
     }
   };
-
-  // Реєстрація фонової задачі при завантаженні компонента
-  useEffect(() => {
-    const startBackgroundLocationTracking = async () => {
-      // Запит на дозвіл на використання геолокації
-      const { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        Alert.alert('Permission denied', 'You need to enable location permissions.');
-        return;
-      }
-
-      // Запуск фонового трекінгу
-      await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
-        accuracy: Location.Accuracy.BestForNavigation,
-        distanceInterval: 10, // Змінюйте на вашу потребу
-        deferredUpdatesInterval: 1000, // Змінюйте на вашу потребу
-      });
-    };
-
-    startBackgroundLocationTracking();
-  }, []);
 
   return (
     <View style={styles.container}>

@@ -175,10 +175,10 @@ const GpsScreen = ({ route, navigation }) => {
             <View style={styles.gpsInfoContainer}>
               <GpsInfo
                 phoneNumber={gps.phoneNumber}
-                model={"s"}
+                model={""}
                 carNumber={carNumber}
                 routeId={1}
-                title={"s"}
+                title={""}
               />
             </View>
           )}

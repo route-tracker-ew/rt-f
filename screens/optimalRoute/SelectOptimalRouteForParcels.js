@@ -15,7 +15,7 @@ import { globalStyles } from "../../style/globalStyles ";
 import { Calendar } from "react-native-calendars";
 import LoadingModal from "../../components/LoadingModal";
 
-const SelectRouteForParcels = ({ route, navigation }) => {
+const SelectOptimalRouteForParcels = ({ route, navigation }) => {
   const [showCalendar, setShowCalendar] = useState(false);
   const [selectedRoute, setSelectedRoute] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -29,30 +29,16 @@ const SelectRouteForParcels = ({ route, navigation }) => {
     );
   }
 
-  const handleParcelRouteInfoPress = (routeInfo) => {
-    setSelectedRoute(routeInfo);
-    setShowCalendar(true);
+  const handleParcelRouteInfoPress = async (routeInfo) => {
+   await setSelectedRoute(routeInfo);
+   await setShowCalendar(true);
   };
 
   const handleSelectedDay = async (selectedDay) => {
-    console.log("test")
-    // setLoading(true)
     try {
-      // if (
-      //   !markedDates[selectedDay.dateString] ||
-      //   markedDates[selectedDay.dateString].disabled
-        
-      // ) {
-      //   alert("Ви можете вибрати тільки зазначені дати.");
-      //   return;
-      // }
       setShowCalendar(false);
       var parcels = await getSpecifiedParcels(selectedRoute.id, selectedDay.dateString);
-      navigation.navigate("ParcelList", {
-        parcels: parcels,
-        routeId: selectedRoute.id,
-        navigation: navigation
-      });
+      navigation.navigate("OptimalRoutes");
       setLoading(false);
     } catch ({ message }) {
       alert(message);
@@ -220,4 +206,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SelectRouteForParcels;
+export default SelectOptimalRouteForParcels;

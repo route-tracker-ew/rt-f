@@ -37,6 +37,7 @@ const ParcelList = ({ route, navigation }) => {
     <View style={styles.container}>
       {parcels.map((parcel) => (
         <Order
+          key={parcel.id}
           id={parcel.id}
           phoneNumber={parcel.receiver.phoneNumber}
           amount={parcel.amount}

@@ -1,11 +1,11 @@
 import * as SecureStore from "expo-secure-store";
 
-export const savePhomeNumberToStorage = async (phomeNumber) => {
-  await SecureStore.setItemAsync("phomeNumber", phomeNumber);
+export const savePhomeNumberToStorage = async (phoneNumber) => {
+  await SecureStore.setItemAsync("phoneNumber", phoneNumber);
 };
 
 export const getPhomeNumberFromStorage = async () => {
-  const phomeNumber = await SecureStore.getItemAsync("phomeNumber");
+  const phomeNumber = await SecureStore.getItemAsync("phoneNumber");
   return phomeNumber;
 };
 
@@ -18,12 +18,12 @@ export const saveLastNameToStorage = async (lastName) => {
 };
 
 export const getFullNameFromStorage = async () => {
-  const fullName = await SecureStore.getItemAsync("fullName");
+  const fullName = await SecureStore.getItemAsync("firstName");
   return fullName;
 };
 
 export const deleteUserInfoFromStorage = async () => {
-  await SecureStore.deleteItemAsync("phomeNumber");
+  await SecureStore.deleteItemAsync("phoneNumber");
   await SecureStore.deleteItemAsync("firstName");
   await SecureStore.deleteItemAsync("lastName");
 };
